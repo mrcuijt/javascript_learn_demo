@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+
+	<button id="btn">Button</button>
+	<script type="text/javascript">
+
+		function sayHello(){
+			console.info("button clicked. sayHello execute.");
+		}
+		function sayHello2(){
+			console.info("button clicked. sayHello2 execute.");
+			// execute an async function
+			setTimeout(sayHello);
+			// throw exception
+			throw "";
+		}
+		function sayHello3(){
+			console.info("button clicked. sayHello3 execute.");
+		}
+		function sayHello4(){
+			console.info("button clicked. sayHello4 execute.");
+		}
+	    // document element obj
+		var oBtn = document.getElementById("btn");
+		// console.info(oBtn);
+
+		// add click event listener (DOM2)
+		oBtn.addEventListener("click",sayHello4,false);
+		// dispatcher click event
+		oBtn.click();
+		// remove click event listener (DOM2)
+		oBtn.removeEventListener("click",sayHello4);
+
+		// add click event listener (DOM0)
+		oBtn.onclick = sayHello;
+		// dispatcher click event
+		oBtn.click();
+		// remove click event listener (DOM0)
+		oBtn.onclick = null;
+
+		oBtn.addEventListener("click",sayHello2,false);
+		oBtn.addEventListener("click",sayHello3,false);
+		oBtn.click();
+		/*
+			1. event queue execute order by asc.
+			2. every event process handler is single. It can't effect other event process handler.
+			3. async event process handler can't block other event process handler (JavaScript never blocking).
+
+			ref https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/EventLoop#%E6%89%A7%E8%A1%8C%E8%87%B3%E5%AE%8C%E6%88%90
+			ref https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/EventLoop#%E6%B0%B8%E4%B8%8D%E9%98%BB%E5%A1%9E
+		*/
+	</script>
+
+	<!-- add click event (HTML event) -->
+	<!-- useage : onclick="functionName();" -->
+	<!-- 
+		ƒ onclick(event) {
+		sayHello();
+		}
+	-->
+	<button id="btn2" onclick="sayHello();">Button 2</button>
+	<script type="text/javascript">
+		var oBtn = document.getElementById("btn2");
+		// console.info(oBtn);
+		oBtn.click();
+		// console.info(oBtn.onclick);
+		// remove click event (HTML & DOM0)
+		oBtn.onclick = null;
+	</script>
+
+	<!-- add click event (HTML event) -->
+	<!-- useage : onclick="(function(){})();" -->
+	<!--
+		ƒ onclick(event) {
+		(function(){console.info(1);})();
+		}
+	-->
+	<button id="btn3" onclick="(function(){console.info(1);})();">Button 3</button>
+	<script type="text/javascript">
+		var oBtn = document.getElementById("btn3");
+		// console.info(oBtn);
+		oBtn.click();
+		// console.info(oBtn.onclick);
+	</script>
+
+	<!-- add click event (HTML event) -->
+	<!-- useage : onclick="function Name(){} Name();" -->
+	<!--
+		ƒ onclick(event) {
+		function a(){console.info(1);} a();
+		}
+	-->
+	<button id="btn4" onclick="function a(){console.info(1);} a();">Button 4</button>
+	<script type="text/javascript">
+		var oBtn = document.getElementById("btn4");
+		// console.info(oBtn);
+		oBtn.click();
+		// console.info(oBtn.onclick);
+	</script>
+
+</body>
+</html>
