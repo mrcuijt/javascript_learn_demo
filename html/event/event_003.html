@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+
+	<button id="btn">Button</button>
+	<script type="text/javascript">
+
+		function sayHello(){
+			alert(11);
+			console.info("button clicked. sayHello execute.");
+		}
+
+		// document element obj
+		var oBtn = document.getElementById("btn");
+		oBtn.attachEvent("onclick",sayHello);
+		/*
+			notice: IE 6 ~ 8 not support addEventListener . support attachEvent .
+
+			ref https://developer.mozilla.org/zh-CN/docs/Web/API/Event#EventTarget.addEventListener
+		*/
+	</script>
+
+
+</body>
+</html>
