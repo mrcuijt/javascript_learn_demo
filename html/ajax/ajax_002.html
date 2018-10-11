@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+
+	<!-- 
+
+		ref https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/responseType#Value
+
+		responseType ["","text","arraybuffer","blob","document","json"]
+
+		""            : An empty responseType string is treated the same as "text", the default type (therefore, as a DOMString.
+		"arraybuffer" : The response is a JavaScript ArrayBuffer containing binary data.
+		"blob"        : The response is a Blob object containing the binary data.
+		"document"    : The response is an HTML Document or XML XMLDocument, as appropriate based on the MIME type of the received data. See HTML in XMLHttpRequest to learn more about using XHR to fetch HTML content.
+		"json"        : The response is a JavaScript object created by parsing the contents of received data as JSON.
+		"text"        : The response is text in a DOMString object.
+		
+		XMLHttpRequest.response 
+
+		// Returns an ArrayBuffer, Blob, Document, JavaScript object, or a DOMString
+		// depending on the value of XMLHttpRequest.responseType. 
+		// that contains the response entity body.
+
+	-->
+	<button id="btn" onclick="ajaxResponseTypeText();">Button text</button>
+	<button id="btn" onclick="ajaxResponseTypeJSON();">Button json</button>
+	<button id="btn" onclick="ajaxResponseTypeArrayBuffer();">Button arraybuffer</button>
+	<button id="btn" onclick="ajaxResponseTypeBlob();">Button blob</button>
+	<script type="text/javascript">
+
+		function ajaxResponseTypeText(){
+
+			// 1. create XMLHttpRequset Object.
+			var xmlhttp;
+			if(window.XMLHttpRequest){
+				//  IE7+, Firefox, Chrome, Opera, Safari Usage
+				xmlhttp = new XMLHttpRequest();
+			}else{
+				// IE6, IE5 Usage
+				xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+
+			// 2. add ajax readystatechange event listener.
+			xmlhttp.onreadystatechange = function(){
+				if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
+					// Returns an ArrayBuffer, Blob, Document, JavaScript object, or a DOMString
+					// depending on the value of XMLHttpRequest.responseType. 
+					// that contains the response entity body.
+					console.info(xmlhttp.response);
+					console.info("responseText :" + xmlhttp.responseText);
+					// Uncaught DOMException: Failed to read the 'responseXML' property from 'XMLHttpRequest': The value is only accessible if the object's 'responseType' is '' or 'document' (was 'json').
+					// console.info("responseXML :" + xmlhttp.responseXML);
+				}
+			}
+			
+			// 3. set specifies responseType what type of data the response contains.
+			// responseType ["","text","arraybuffer","blob","document","json"]
+			// responseType default is "text" 
+			// xmlhttp.responseType = ""; // "" == "text"
+			xmlhttp.responseType = "text";
+
+			// 4. set ajax request info 
+			xmlhttp.open("GET","./data.json",true);
+
+			// 5. send ajax request
+			xmlhttp.send();
+
+		}
+
+		function ajaxResponseTypeJSON(){
+
+			// 1. create XMLHttpRequset Object.
+			var xmlhttp;
+			if(window.XMLHttpRequest){
+				//  IE7+, Firefox, Chrome, Opera, Safari Usage
+				xmlhttp = new XMLHttpRequest();
+			}else{
+				// IE6, IE5 Usage
+				xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+
+			// 2. add ajax readystatechange event listener.
+			xmlhttp.onreadystatechange = function(){
+				if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
+					// Returns an ArrayBuffer, Blob, Document, JavaScript object, or a DOMString
+					// depending on the value of XMLHttpRequest.responseType. 
+					// that contains the response entity body.
+					console.info(xmlhttp.response);
+					// Uncaught DOMException: Failed to read the 'responseText' property from 'XMLHttpRequest': The value is only accessible if the object's 'responseType' is '' or 'text' (was 'json').
+					// console.info("responseText :" + xmlhttp.responseText);
+					// Uncaught DOMException: Failed to read the 'responseXML' property from 'XMLHttpRequest': The value is only accessible if the object's 'responseType' is '' or 'document' (was 'json').
+					// console.info("responseXML :" + xmlhttp.responseXML);
+				}
+			}
+			
+			// 3. set specifies responseType what type of data the response contains.
+			// responseType ["","text","arraybuffer","blob","document","json"]
+			// responseType default is "text" 
+			// xmlhttp.responseType = ""; // "" == "text"
+			xmlhttp.responseType = "json";
+
+			// 4. set ajax request info 
+			xmlhttp.open("GET","./data.json",true);
+
+			// 5. send ajax request
+			xmlhttp.send();
+
+		}
+
+		function ajaxResponseTypeArrayBuffer(){
+
+			// 1. create XMLHttpRequset Object.
+			var xmlhttp;
+			if(window.XMLHttpRequest){
+				//  IE7+, Firefox, Chrome, Opera, Safari Usage
+				xmlhttp = new XMLHttpRequest();
+			}else{
+				// IE6, IE5 Usage
+				xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+
+			// 2. add ajax readystatechange event listener.
+			xmlhttp.onreadystatechange = function(){
+				if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
+					// Returns an ArrayBuffer, Blob, Document, JavaScript object, or a DOMString
+					// depending on the value of XMLHttpRequest.responseType. 
+					// that contains the response entity body.
+					console.info(xmlhttp.response);
+					convertArrayBufferToBlob(xmlhttp.response);
+				}
+			}
+			
+			// 3. set specifies responseType what type of data the response contains.
+			// responseType ["","text","arraybuffer","blob","document","json"]
+			// responseType default is "text" 
+			// xmlhttp.responseType = ""; // "" == "text"
+			xmlhttp.responseType = "arraybuffer";
+
+			// 4. set ajax request info 
+			xmlhttp.open("GET","./data.json",true);
+
+			// 5. send ajax request
+			xmlhttp.send();
+
+		}
+
+		function ajaxResponseTypeBlob(){
+
+			// 1. create XMLHttpRequset Object.
+			var xmlhttp;
+			if(window.XMLHttpRequest){
+				//  IE7+, Firefox, Chrome, Opera, Safari Usage
+				xmlhttp = new XMLHttpRequest();
+			}else{
+				// IE6, IE5 Usage
+				xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+
+			// 2. add ajax readystatechange event listener.
+			xmlhttp.onreadystatechange = function(){
+				if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
+					// Returns an ArrayBuffer, Blob, Document, JavaScript object, or a DOMString
+					// depending on the value of XMLHttpRequest.responseType. 
+					// that contains the response entity body.
+					console.info(xmlhttp.response);
+					// URL.createObjectURL(blob); // create a blob object access URL
+					convertBlobToArrayBuffer(xmlhttp.response);
+				}
+			}
+			
+			// 3. set specifies responseType what type of data the response contains.
+			// responseType ["","text","arraybuffer","blob","document","json"]
+			// responseType default is "text" 
+			// xmlhttp.responseType = ""; // "" == "text"
+			xmlhttp.responseType = "blob";
+
+			// 4. set ajax request info 
+			xmlhttp.open("GET","./data.json",true);
+
+			// 5. send ajax request
+			xmlhttp.send();
+
+		}
+
+	</script>
+
+	<script type="text/javascript">
+
+		/**
+		 * Convert Blob to ArrayBuffer
+		 *
+		 * @param blob
+		 */
+		function convertBlobToArrayBuffer(blob){
+
+			var reader = new FileReader();
+
+			reader.onload = function(e){
+
+				// console.info(e.target); target is a FileReader
+				// console.info(e.target.result);
+				// console.info(reader.result); // ObjectURL BlobURL
+
+				var arrayBuffer = reader.result; // result is ArrayBuffer
+
+
+				// var dicomPart10AsArrayBuffer = reader.result;
+				// var byteArray = new Uint8Array(dicomPart10AsArrayBuffer);
+				// var dataSet = dicomParser.parseDicom(byteArray);
+
+				// Uncaught RangeError: byte length of Int16Array should be a multiple of 2
+				// var buf = new int16array(reader.result);
+				// console.info(buf);
+			}
+
+			reader.readAsArrayBuffer(blob);
+			
+		}
+
+		/**
+		 * Convert ArrayBuffer to Blob
+		 *
+		 * @param blob
+		 */
+		function convertArrayBufferToBlob(arrayBuffer){
+			
+			var blob = new Blob([arrayBuffer]);
+			console.info(blob);
+		}
+
+	</script>
+
+
+</body>
+</html>
